@@ -4,11 +4,11 @@ import threading
 class Server():
     def __init__(self, port):
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  # Create a TCP/IP socket
-        self.server_address = ('localhost', port)  # Bind the socket to the port
+        self.server_address = ('192.168.0.14', port)  # Bind the socket to the port
         self.thread = threading.Thread(target=self.run).start()
 
     def run(self):
-        print('starting up on {} port {}'.format(*self.server_address))
+        print('Starting up on {} port {}'.format(*self.server_address))
         self.sock.bind(self.server_address)
         self.sock.listen(1)  # Listen for incoming connections
         while True:
@@ -19,7 +19,7 @@ class Server():
                 print('connection from', client_address)
                 # Receive the data in small chunks and retransmit it
                 while True:
-                    data = connection.recv(16)
+                    data = connection.recv(32)
                     print('received {!r}'.format(data))
                     if data:
                         print('sending data back to the client')

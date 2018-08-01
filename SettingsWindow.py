@@ -2,6 +2,7 @@ import sys
 import SettingsUI
 from PyQt5.QtWidgets import QDialog
 
+
 class SettingsWindow(QDialog, SettingsUI.Ui_Dialog):
     def __init__(self):
         super(SettingsWindow, self).__init__()

@@ -2,18 +2,17 @@ import sys, colorsys
 import MainUI
 import App
 import SettingsWindow
-# import Sockets
-# from PyQt5.QtCore import QObject, pyqtSignal
 from PyQt5.QtWidgets import QApplication, QDialog
+
 
 class MainWindow(QDialog, MainUI.Ui_Dialog):
 
-    def __init__(self):
+    def __init__(self, app):
         super(MainWindow, self).__init__()
         self.setupUi(self)
         self.setWindowTitle("GPIO Remote")
 
-        self.app_ = App.App(self)
+        self._app = app
 
         self.ConnectButton.clicked.connect(self.connect_Slot)
         self.SettingsButton.clicked.connect(self.settings_Slot)
@@ -34,11 +33,11 @@ class MainWindow(QDialog, MainUI.Ui_Dialog):
         if not text:
             return
         self.SendLine.clear()
-        self.app_.writeConsole(">>> " + text)
-        self.app_.client.send(text)
+        self._app.writeconsole("<<< " + text)
+        self._app.client.send(text)
 
     def connect_Slot(self):
-        self.app_.connect()
+        self._app.connect()
 
     def settings_Slot(self):
         window = SettingsWindow.SettingsWindow()
@@ -62,8 +61,8 @@ class MainWindow(QDialog, MainUI.Ui_Dialog):
         self.SliderS.setValue(s * 255)
         self.SliderV.setValue(v)
 
-        self.app_.setLocalColor()
-        self.app_.sendColor(self.SliderR.value(), self.SliderG.value(), self.SliderB.value())
+        self._app.setlocalcolor()
+        self._app.sendcolor(self.SliderR.value(), self.SliderG.value(), self.SliderB.value())
 
     def slideHSV_Slot(self):
         r, g, b = colorsys.hsv_to_rgb(self.SliderH.value() / 1535, self.SliderS.value() / 255,
@@ -72,11 +71,11 @@ class MainWindow(QDialog, MainUI.Ui_Dialog):
         self.SliderG.setValue(g*255)
         self.SliderB.setValue(b*255)
 
-        self.app_.setLocalColor()
-        self.app_.sendColor(self.SliderR.value(), self.SliderG.value(), self.SliderB.value())
+        self._app.setlocalcolor()
+        self._app.sendcolor(self.SliderR.value(), self.SliderG.value(), self.SliderB.value())
 
-if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    window = MainWindow()
-    window.show()
-    sys.exit(app.exec_())
+# if __name__ == "__main__":
+#     app = QApplication(sys.argv)
+#     window = MainWindow()
+#     window.show()
+#     sys.exit(app.exec_())
