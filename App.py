@@ -1,66 +1,74 @@
 import sys
 from PyQt5.QtWidgets import QApplication, QDialog
-import MainWindow
+from PyQt5.QtCore import QObject, pyqtSignal
+import MainWindow, MainUI
 import SockClient
 from threading import Lock
 
 
-class App():
+class App(QObject):
+    receivedData = pyqtSignal(str)
+    disconnected = pyqtSignal()
+
     def __init__(self):
-        self.client = SockClient.Client(self)
+        super().__init__()
+        self.client = None
         self.recently_color = (0, 0, 0)
-        self._console_lock = Lock()
+        # self._console_lock = Lock()
 
-        self.app = QApplication(sys.argv)
+        self.qapp = QApplication(sys.argv)
         self._window = MainWindow.MainWindow(self)
+        self.initconn()
         self._window.show()
-        sys.exit(self.app.exec_())
+        sys.exit(self.qapp.exec_())
 
-    def connect(self):
-        if self.client.isConnected is False:
-            self.client.connect(self._window.IPLine.text(), int(self._window.PortLine.text()))
-            self.writeconsole(str(self.client.textStatus))
-            self.writeinfo(str(self.client.textStatus))
-            if self.client.isConnected is True:
-                self._window.SliderR.setEnabled(True)
-                self._window.SliderG.setEnabled(True)
-                self._window.SliderB.setEnabled(True)
-                self._window.SliderH.setEnabled(True)
-                self._window.SliderS.setEnabled(True)
-                self._window.SliderV.setEnabled(True)
-                self._window.RainbowButton.setEnabled(True)
-                self._window.ConnectButton.setText("Rozłącz")
+    def initconn(self):
+        self.receivedData.connect(self.recvmessage)
+        self.disconnected.connect(self.disconnect)
+
+    def connecttoserver(self):
+        self.client = SockClient.Client(self)
+        self.client.connect(self._window.IPLine.text(), int(self._window.PortLine.text()))
+        self.writeconsole(str(self.client.textStatus))
+        self.writeinfo(str(self.client.textStatus))
+        if self.client.isConnected is True:
+            return True
         else:
-            self.disconnect()
+            self.client = None
+            return False
 
     def disconnect(self):
-        if self.client.isConnected is True:
-            self.client.close()
-            self.writeconsole(self.client.textStatus)
-            self.writeinfo(self.client.textStatus)
-            self._window.SliderR.setEnabled(False)
-            self._window.SliderG.setEnabled(False)
-            self._window.SliderB.setEnabled(False)
-            self._window.SliderH.setEnabled(False)
-            self._window.SliderS.setEnabled(False)
-            self._window.SliderV.setEnabled(False)
-            self._window.RainbowButton.setEnabled(False)
-            self._window.ConnectButton.setText("Połącz")
+        self.client.close()
+        self.writeconsole(self.client.textStatus)
+        self.writeinfo(self.client.textStatus)
+        self.client = None
 
     def writeinfo(self, text):
         self._window.InfoLabel.setText(text)
 
     def writeconsole(self, text):
-        self._console_lock.acquire(timeout=0.5)
         text = text.rstrip('\n')
         self._window.TextBrowser.append(text)
-        self._console_lock.release()
 
     def sendcolor(self, red, green, blue):
         if self.recently_color == (red, green, blue):
             return
         self.client.send("COLOR:" + str(red) + "," + str(green) + "," + str(blue))
         self.recently_color = (red, green, blue)
+
+    def sendmessage(self):
+        text = self._window.SendLine.text()
+        if not text:
+            return
+        if self.client is None:
+            self.writeconsole("<font color=\"red\">Nie można wysłać polecenia</font>")
+            return
+        self._window.SendLine.clear()
+        self.writeconsole("<<< " + text)
+        self.client.send(text)
+
+    def recvmessage(self, text):
+        self.writeconsole(">>> " + text)
 
     def setlocalcolor(self):
         text_brightness = "0, 0, 0"

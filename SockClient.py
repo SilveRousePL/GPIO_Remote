@@ -1,6 +1,5 @@
 import socket
 import threading
-import App
 
 
 class Client():
@@ -17,17 +16,15 @@ class Client():
             try:
                 data = self.sock.recv(4096)
             except socket.timeout:
-                print("Timeout")
                 if self.isConnected is False:
                     break
                 continue
             except socket.error:
                 break
-            print('received {!r}'.format(data))
             if data.decode() is '':
-                self._app.disconnect
-            print(data.decode())
-            self._app.writeconsole(">>> " + data.decode())
+                self._app.disconnected.emit()
+                break
+            self._app.receivedData.emit(data.decode())
 
     def connect(self, address, port):
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -39,9 +36,8 @@ class Client():
             self.sock.connect(self.server_address)
             self.isConnected = True
             self.textStatus = "Połączono"
-            self.thread = threading.Thread(target=self.run).start()
+            self.thread = threading.Thread(target=self.run, daemon=1).start()
         except Exception as e:
-            print("connectEx")
             self.isConnected = False
             self.textStatus = e
             return
@@ -50,7 +46,6 @@ class Client():
         try:
             self.sock.send(str(data + '\n').encode())
         except Exception:
-            print("sendEx")
             self._app.writeconsole("<font color=\"red\">Nie można wysłać polecenia</font>")
             return False
         return True
@@ -61,7 +56,6 @@ class Client():
             self.textStatus = "Zakończono połączenie"
         except Exception as e:
             self.textStatus = e
-            print("closeEx")
         self.isConnected = False
         self.server_address = None
         return
