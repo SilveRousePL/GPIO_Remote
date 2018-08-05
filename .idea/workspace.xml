@@ -2,12 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d57c530b-2205-4538-ba8d-817038ad66eb" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/App.py" beforeDir="false" afterPath="$PROJECT_DIR$/App.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MainUI.py" beforeDir="false" afterPath="$PROJECT_DIR$/MainUI.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MainUI.ui" beforeDir="false" afterPath="$PROJECT_DIR$/MainUI.ui" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MainWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/MainWindow.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SockClient.py" beforeDir="false" afterPath="$PROJECT_DIR$/SockClient.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SockServer.py" beforeDir="false" afterPath="$PROJECT_DIR$/SockServer.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -109,8 +103,8 @@
       <file leaf-file-name="SockClient.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/SockClient.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="38" column="12" selection-start-line="38" selection-start-column="12" selection-end-line="38" selection-end-column="77" />
+            <state relative-caret-position="363">
+              <caret line="63" selection-start-line="63" selection-end-line="67" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
@@ -121,8 +115,8 @@
       <file leaf-file-name="SockServer.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/SockServer.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="249">
-              <caret line="20" column="50" selection-start-line="20" selection-start-column="50" selection-end-line="20" selection-end-column="50" />
+            <state relative-caret-position="439">
+              <caret line="43" lean-forward="true" selection-start-line="43" selection-end-line="43" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
@@ -672,8 +666,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/SockClient.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="38" column="12" selection-start-line="38" selection-start-column="12" selection-end-line="38" selection-end-column="77" />
+        <state relative-caret-position="363">
+          <caret line="63" selection-start-line="63" selection-end-line="67" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
           </folding>
@@ -682,8 +676,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/SockServer.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="249">
-          <caret line="20" column="50" selection-start-line="20" selection-start-column="50" selection-end-line="20" selection-end-column="50" />
+        <state relative-caret-position="439">
+          <caret line="43" lean-forward="true" selection-start-line="43" selection-end-line="43" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
           </folding>

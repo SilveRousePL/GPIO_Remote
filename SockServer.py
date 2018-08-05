@@ -1,5 +1,6 @@
 import socket
 import threading
+import time
 
 
 class Server():
@@ -35,3 +36,8 @@ class Server():
             finally:
                 # Clean up the connection
                 connection.close()
+
+if __name__ == "__main__":
+    server = Server(10000)
+    while True:
+        time.sleep(1)
