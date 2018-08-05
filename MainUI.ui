@@ -469,6 +469,23 @@ color: rgb(255, 255, 255);</string>
    </layout>
   </widget>
  </widget>
+ <tabstops>
+  <tabstop>SendLine</tabstop>
+  <tabstop>SendButton</tabstop>
+  <tabstop>ConnectButton</tabstop>
+  <tabstop>SettingsButton</tabstop>
+  <tabstop>RainbowButton</tabstop>
+  <tabstop>MoreButton</tabstop>
+  <tabstop>IPLine</tabstop>
+  <tabstop>PortLine</tabstop>
+  <tabstop>TextBrowser</tabstop>
+  <tabstop>SliderR</tabstop>
+  <tabstop>SliderG</tabstop>
+  <tabstop>SliderB</tabstop>
+  <tabstop>SliderH</tabstop>
+  <tabstop>SliderS</tabstop>
+  <tabstop>SliderV</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

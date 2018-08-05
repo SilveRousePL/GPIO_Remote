@@ -27,6 +27,8 @@ class App(QObject):
         self.disconnected.connect(self.disconnect)
 
     def connecttoserver(self):
+        self.writeconsole('<i>Connecting with {}:{}...</i>'.format(self._window.IPLine.text(),
+                                                                   self._window.PortLine.text()))
         self.client = SockClient.Client(self)
         self.client.connect(self._window.IPLine.text(), int(self._window.PortLine.text()))
         self.writeconsole(str(self.client.textStatus))
@@ -46,7 +48,7 @@ class App(QObject):
     def writeinfo(self, text):
         self._window.InfoLabel.setText(text)
 
-    def writeconsole(self, text):
+    def writeconsole(self, text):   # napisać klasę obsługującą różne typy komunikatów
         text = text.rstrip('\n')
         self._window.TextBrowser.append(text)
 
@@ -64,11 +66,11 @@ class App(QObject):
             self.writeconsole("<font color=\"red\">Nie można wysłać polecenia</font>")
             return
         self._window.SendLine.clear()
-        self.writeconsole("<<< " + text)
+        self.writeconsole("<img src=\"arrow_green_small.png\"></img> " + text)
         self.client.send(text)
 
     def recvmessage(self, text):
-        self.writeconsole(">>> " + text)
+        self.writeconsole("<img src=\"arrow_blue_small.png\"></img> " + text)
 
     def setlocalcolor(self):
         text_brightness = "0, 0, 0"

@@ -20,6 +20,7 @@ class Client():
                     break
                 continue
             except socket.error:
+                self._app.disconnected.emit()
                 break
             if data.decode() is '':
                 self._app.disconnected.emit()
@@ -31,7 +32,6 @@ class Client():
         self.sock.setblocking(0)
         self.sock.settimeout(1)
         self.server_address = (address, port)
-        self._app.writeconsole('<i>Connecting with {}:{}...</i>'.format(address, port))
         try:
             self.sock.connect(self.server_address)
             self.isConnected = True

@@ -8,10 +8,10 @@ class MainWindow(QDialog, MainUI.Ui_Dialog):
 
     def __init__(self, app):
         super(MainWindow, self).__init__()
+        self._app = app
+
         self.setupUi(self)
         self.setWindowTitle("GPIO Remote")
-
-        self._app = app
 
         self.ConnectButton.clicked.connect(self.connect_button_SLOT)
         self.SettingsButton.clicked.connect(self.settings_button_SLOT)
@@ -19,7 +19,6 @@ class MainWindow(QDialog, MainUI.Ui_Dialog):
         self.MoreButton.clicked.connect(self.more_button_SLOT)
 
         self.SendButton.clicked.connect(self._app.sendmessage)
-        self.SendLine.returnPressed.connect(self._app.sendmessage)
 
         self.SliderR.actionTriggered.connect(self.RGB_slider_SLOT)
         self.SliderG.actionTriggered.connect(self.RGB_slider_SLOT)
@@ -63,7 +62,7 @@ class MainWindow(QDialog, MainUI.Ui_Dialog):
         window.show()
 
     def rainbow_button_SLOT(self):
-        print("Rzygam tęczą!")
+        self._app.writeconsole("<b><i>Rzygam tęczą</i></b>")
 
     def more_button_SLOT(self):
         if self.geometry().width() == 668:
