@@ -40,6 +40,8 @@ class App(QObject):
             return False
 
     def disconnect(self):
+        if self.client is None:
+            return
         self.client.close()
         self.writeconsole(self.client.textStatus)
         self.writeinfo(self.client.textStatus)
@@ -47,10 +49,6 @@ class App(QObject):
 
     def writeinfo(self, text):
         self._window.InfoLabel.setText(text)
-
-    def writeconsole(self, text):   # napisać klasę obsługującą różne typy komunikatów
-        text = text.rstrip('\n')
-        self._window.TextBrowser.append(text)
 
     def sendcolor(self, red, green, blue):
         if self.recently_color == (red, green, blue):
@@ -66,11 +64,11 @@ class App(QObject):
             self.writeconsole("<font color=\"red\">Nie można wysłać polecenia</font>")
             return
         self._window.SendLine.clear()
-        self.writeconsole("<img src=\"arrow_green_small.png\"></img> " + text)
+        self.writeconsole("<img src=\"./res/arrow_green_small.png\"></img> " + text)
         self.client.send(text)
 
     def recvmessage(self, text):
-        self.writeconsole("<img src=\"arrow_blue_small.png\"></img> " + text)
+        self.writeconsole("<img src=\"./res/arrow_blue_small.png\"></img> " + text)
 
     def setlocalcolor(self):
         text_brightness = "0, 0, 0"

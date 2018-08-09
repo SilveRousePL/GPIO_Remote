@@ -13,12 +13,12 @@ class MainWindow(QDialog, MainUI.Ui_Dialog):
         self.setupUi(self)
         self.setWindowTitle("GPIO Remote")
 
+        self.child_window = None
+
         self.ConnectButton.clicked.connect(self.connect_button_SLOT)
         self.SettingsButton.clicked.connect(self.settings_button_SLOT)
         self.RainbowButton.clicked.connect(self.rainbow_button_SLOT)
         self.MoreButton.clicked.connect(self.more_button_SLOT)
-
-        self.SendButton.clicked.connect(self._app.sendmessage)
 
         self.SliderR.actionTriggered.connect(self.RGB_slider_SLOT)
         self.SliderG.actionTriggered.connect(self.RGB_slider_SLOT)
@@ -58,8 +58,8 @@ class MainWindow(QDialog, MainUI.Ui_Dialog):
         self.ConnectButton.setEnabled(True)
 
     def settings_button_SLOT(self):
-        window = SettingsWindow.SettingsWindow()
-        window.show()
+        self.child_window = SettingsWindow.SettingsWindow()
+        self.child_window.show()
 
     def rainbow_button_SLOT(self):
         self._app.writeconsole("<b><i>Rzygam tęczą</i></b>")

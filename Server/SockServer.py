@@ -24,7 +24,7 @@ class Server():
                 print('connection from', client_address)
                 # Receive the data in small chunks and retransmit it
                 while True:
-                    data = connection.recv(32)
+                    data = connection.recv(4096)
                     print('received {!r}'.format(data))
                     if data:
                         print('sending data back to the client')
